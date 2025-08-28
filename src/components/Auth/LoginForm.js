@@ -15,9 +15,8 @@ export const Login = ({adminurl}) => {
       setIsLoading(true);
       setError('');
       
-      setTimeout(() => {
-        const result = login(email, password);
-        
+      setTimeout(async() => {
+        const result =await login(email, password);
         if (!result.success) {
           setError(result.error);
         }

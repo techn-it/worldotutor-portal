@@ -290,7 +290,7 @@ export const MCQExam = () => {
               <div className="p-6 space-y-6">
                 {examQuestions.map((question, index) => {
                   const userAnswer = selectedAnswers[question.id];
-                  const isCorrect = userAnswer === question.correctAnswer;
+                  const isCorrect = userAnswer+1 === question.correctAnswer;
                   const wasAttempted = userAnswer !== undefined;
   
                   return (
