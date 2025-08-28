@@ -6,7 +6,8 @@ import { Login } from "../Auth/LoginForm";
 import { Dashboard } from "../dashboard/Dashboard";
 // If you want to use a Class Component
 export const App = ({adminurl}) => {
-    // const token = localStorage.getItem("token") ? localStorage.getItem("token") : null;
+  ssr:false
+    // const token =  window.localStorage.getItem("token") 
     // if(!token){
     //   return <Login adminurl={adminurl} />;
     // }
@@ -18,6 +19,6 @@ export const App = ({adminurl}) => {
         </div>
       );
     }
-     return user?.loginresult?.token ? <Dashboard /> : <Login adminurl={adminurl} />;
+     return user?.loginresult?.token  ? <Dashboard /> : <Login adminurl={adminurl} />;
   }
 
