@@ -7,9 +7,9 @@ export const Sidebar = ({ activeTab, setActiveTab, isMobile, isOpen, setIsOpen }
     
     const menuItems = [
       { id: 'dashboard', label: 'Dashboard', icon: Home , useraccess:true },
-      { id: 'exam', label: 'MCQ Exam', icon: BookOpen , useraccess:true },
+      { id: 'exam', label: 'MCQ Exam', icon: BookOpen , useraccess:false },
       { id: 'analytics', label: 'Analytics', icon: BarChart3 , useraccess:true },
-      { id: 'users', label: 'Users', icon: Users , useraccess:false},
+      { id: 'users', label: 'Users', icon: Users , useraccess:true},
       { id: 'settings', label: 'Settings', icon: Settings , useraccess:true }
     ];
   

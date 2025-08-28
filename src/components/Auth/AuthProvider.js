@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
       // }
 
       const foundUser  = await loginCredential({email,password});
-      if (foundUser) {
+        if (foundUser?.success) {
         fetchallQuestions()
         localStorage.setItem('token',foundUser?.loginresult?.token)
         const userWithoutPassword = { ...foundUser };
@@ -43,7 +43,9 @@ export const AuthProvider = ({ children }) => {
       return { success: false, error: 'Invalid credentials' };
     };
     useEffect(() => {
-      fetchallQuestions()
+      if(user){
+        fetchallQuestions()
+      }
     },[user])
 
     const logout = () => {

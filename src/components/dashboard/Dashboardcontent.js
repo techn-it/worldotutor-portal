@@ -100,13 +100,13 @@ export const DashboardContent = ({ activeTab }) => {
                             <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                               <User className="w-4 h-4 text-blue-600" />
                             </div>
-                            <span className="font-medium text-gray-900">{user.name}</span>
+                            <span className="font-medium text-gray-900">{user?.name}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-gray-600">{user.email}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-gray-600">{user?.email}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full capitalize">
-                            {user.role}
+                            {user?.role}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
