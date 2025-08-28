@@ -1,15 +1,16 @@
-import { useAuth } from "@/context/useAuth";
+"use client"
+import { UsesAuth } from "@/context/UsesAuth";
 import { BarChart3, BookOpen, Home, LogOut, Settings, User, Users }  from "lucide-react";
 
 export const Sidebar = ({ activeTab, setActiveTab, isMobile, isOpen, setIsOpen }) => {
-    const { user, logout } = useAuth();
+    const { user, logout } = UsesAuth();
     
     const menuItems = [
-      { id: 'dashboard', label: 'Dashboard', icon: Home },
-      { id: 'exam', label: 'MCQ Exam', icon: BookOpen },
-      { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-      { id: 'users', label: 'Users', icon: Users },
-      { id: 'settings', label: 'Settings', icon: Settings }
+      { id: 'dashboard', label: 'Dashboard', icon: Home , useraccess:true },
+      { id: 'exam', label: 'MCQ Exam', icon: BookOpen , useraccess:true },
+      { id: 'analytics', label: 'Analytics', icon: BarChart3 , useraccess:true },
+      { id: 'users', label: 'Users', icon: Users , useraccess:false},
+      { id: 'settings', label: 'Settings', icon: Settings , useraccess:true }
     ];
   
     const handleItemClick = (id) => {
@@ -25,22 +26,22 @@ export const Sidebar = ({ activeTab, setActiveTab, isMobile, isOpen, setIsOpen }
         
         <div className={`${isMobile ? 'fixed' : 'relative'} ${isMobile && !isOpen ? '-translate-x-full' : 'translate-x-0'} w-64 bg-white border-r border-gray-200 h-screen transition-transform duration-300 z-50`}>
           <div className="p-6 border-b border-gray-200">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3" >
               <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <User className="w-6 h-6 text-white" />
+                {/* <User className="w-6 h-6 text-white" /> */}
               </div>
               <div>
-                <h3 className="font-semibold text-gray-800">{user?.name}</h3>
-                <p className="text-sm text-gray-500 capitalize">{user?.role}</p>
+                <h3 className="font-semibold text-gray-800">{user?.loginresult?.user?.name}</h3>
+                <p className="text-sm text-gray-500 capitalize">{user?.loginresult?.user.role}</p>
               </div>
             </div>
           </div>
   
           <nav className="p-4">
-            {menuItems.map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                onClick={() => handleItemClick(id)}
+                {menuItems.map(({ id, label, icon: Icon ,useraccess}) => (
+              <div key={id}>
+              {       (!useraccess || user.loginresult.user.role === 'admin') && <button
+                              onClick={() => handleItemClick(id)}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg mb-2 transition-colors ${
                   activeTab === id 
                     ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600' 
@@ -49,7 +50,9 @@ export const Sidebar = ({ activeTab, setActiveTab, isMobile, isOpen, setIsOpen }
               >
                 <Icon className="w-5 h-5" />
                 <span className="font-medium">{label}</span>
-              </button>
+              </button>}
+            
+           </div>
             ))}
           </nav>
   

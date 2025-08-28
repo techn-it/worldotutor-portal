@@ -69,6 +69,10 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    exams: Exam;
+    questions: Question;
+    results: Result;
+    quizcategories: Quizcategory;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,6 +81,10 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    exams: ExamsSelect<false> | ExamsSelect<true>;
+    questions: QuestionsSelect<false> | QuestionsSelect<true>;
+    results: ResultsSelect<false> | ResultsSelect<true>;
+    quizcategories: QuizcategoriesSelect<false> | QuizcategoriesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -119,6 +127,9 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  name: string;
+  role: 'admin' | 'user';
+  lastLogin?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -158,6 +169,78 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams".
+ */
+export interface Exam {
+  id: string;
+  title: string;
+  description?: string | null;
+  questions: (string | Question)[];
+  timeLimit: number;
+  passingScore: number;
+  isActive?: boolean | null;
+  category: string;
+  createdBy?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "questions".
+ */
+export interface Question {
+  id: string;
+  category: string | Quizcategory;
+  question: string;
+  options?:
+    | {
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  correctAnswer: number;
+  explanation?: string | null;
+  createdBy?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quizcategories".
+ */
+export interface Quizcategory {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "results".
+ */
+export interface Result {
+  id: string;
+  user: string | User;
+  exam: string | Exam;
+  answers?:
+    | {
+        question: string | Question;
+        selectedOption: number;
+        isCorrect: boolean;
+        id?: string | null;
+      }[]
+    | null;
+  score: number;
+  totalQuestions: number;
+  correctAnswers: number;
+  timeSpent: number;
+  passed: boolean;
+  completedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -170,6 +253,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'exams';
+        value: string | Exam;
+      } | null)
+    | ({
+        relationTo: 'questions';
+        value: string | Question;
+      } | null)
+    | ({
+        relationTo: 'results';
+        value: string | Result;
+      } | null)
+    | ({
+        relationTo: 'quizcategories';
+        value: string | Quizcategory;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -218,6 +317,10 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  password?: T;
+  role?: T;
+  lastLogin?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -252,6 +355,74 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams_select".
+ */
+export interface ExamsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  questions?: T;
+  timeLimit?: T;
+  passingScore?: T;
+  isActive?: T;
+  category?: T;
+  createdBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "questions_select".
+ */
+export interface QuestionsSelect<T extends boolean = true> {
+  category?: T;
+  question?: T;
+  options?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  correctAnswer?: T;
+  explanation?: T;
+  createdBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "results_select".
+ */
+export interface ResultsSelect<T extends boolean = true> {
+  user?: T;
+  exam?: T;
+  answers?:
+    | T
+    | {
+        question?: T;
+        selectedOption?: T;
+        isCorrect?: T;
+        id?: T;
+      };
+  score?: T;
+  totalQuestions?: T;
+  correctAnswers?: T;
+  timeSpent?: T;
+  passed?: T;
+  completedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quizcategories_select".
+ */
+export interface QuizcategoriesSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

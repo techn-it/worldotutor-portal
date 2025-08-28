@@ -1,0 +1,10 @@
+/* src/styles/payloadStyles.css */
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+/* Skip the preflight reset to avoid conflicts with Payload's admin styles */
+/* @import 'tailwindcss/preflight.css' layer(base); */
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* Support Payload’s dark mode toggle */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

@@ -1,18 +1,16 @@
 "use client";
-import { useAuth } from "@/context/useAuth";
+import { UsesAuth } from "@/context/UsesAuth";
 import { useState } from "react";
-
- 
-const { Lock, Mail } = require("lucide-react");
-
-export const Login = () => {
+import  { Lock, Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
+export const Login = ({adminurl}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const { login } = useAuth();
-  
-    const handleSubmit = (e) => {
+    const router = useRouter();
+    const { login } = UsesAuth();
+     const handleSubmit = (e) => {
       e.preventDefault();
       setIsLoading(true);
       setError('');
@@ -89,6 +87,15 @@ export const Login = () => {
             <p className="text-xs text-gray-500">Admin: admin@example.com / admin123</p>
             <p className="text-xs text-gray-500">User: user@example.com / user123</p>
           </div>
+
+          <button
+              type="submit"
+              disabled={isLoading}
+              onClick={() => router.push(adminurl)}
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 focus:ring-4 focus:ring-blue-300 transition-all duration-200 font-semibold disabled:opacity-70"
+            >
+              {isLoading ? 'Signing in...' : 'Admin Login'}
+            </button>
         </div>
       </div>
     );

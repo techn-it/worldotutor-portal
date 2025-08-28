@@ -1,5 +1,6 @@
 "use client"; 
-import { mcqQuestions } from "@/data/McqQuestion";
+import { UsesAuth } from "@/context/UsesAuth";
+// import { mcqQuestions } from "@/data/McqQuestion";
 import { RotateCcw, CheckCircle, XCircle, BookOpen, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -9,8 +10,8 @@ export const MCQExam = () => {
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [timeLeft, setTimeLeft] = useState(600);
     const [examQuestions, setExamQuestions] = useState([]);
-  
-    useEffect(() => {
+    const {mcqQuestions} = UsesAuth();
+     useEffect(() => {
       let timer;
       if (examState === 'taking' && timeLeft > 0) {
         timer = setInterval(() => {
@@ -28,7 +29,7 @@ export const MCQExam = () => {
   
     const startExam = () => {
       const shuffledQuestions = [...mcqQuestions].sort(() => Math.random() - 0.5).slice(0, 8);
-      setExamQuestions(shuffledQuestions);
+       setExamQuestions(shuffledQuestions);
       setExamState('taking');
       setCurrentQuestion(0);
       setSelectedAnswers({});
@@ -88,7 +89,7 @@ export const MCQExam = () => {
       const percentage = examQuestions.length > 0 ? (correct / examQuestions.length) * 100 : 0;
       return { correct, attempted, total: examQuestions.length, percentage };
     };
-  
+ 
     if (examState === 'start') {
       return (
         <div className="p-6">
@@ -126,6 +127,7 @@ export const MCQExam = () => {
   
     if (examState === 'taking') {
       const question = examQuestions[currentQuestion];
+  
       const progress = ((currentQuestion + 1) / examQuestions.length) * 100;
   
       return (
@@ -154,15 +156,16 @@ export const MCQExam = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
               <div className="mb-4">
                 <span className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full mb-3">
-                  {question.category}
+                  {question?.category?.name}
                 </span>
                 <h3 className="text-xl font-semibold text-gray-800 mb-6">
-                  {question.question}
+                  {question?.question}
                 </h3>
               </div>
   
               <div className="space-y-3">
-                {question.options.map((option, index) => (
+                {console.log("options", question?.options)}
+                {question?.options.map((option, index) => (
                   <button
                     key={index}
                     onClick={() => selectAnswer(question.id, index)}
@@ -173,7 +176,7 @@ export const MCQExam = () => {
                     }`}
                   >
                     <span className="font-medium text-gray-700">
-                      {String.fromCharCode(65 + index)}. {option}
+                      {String.fromCharCode(65 + index)}. {option?.text}
                     </span>
                   </button>
                 ))}
@@ -308,7 +311,7 @@ export const MCQExam = () => {
                                 wasAttempted && optIndex === userAnswer && optIndex !== question.correctAnswer ? 'bg-red-50 text-red-700' :
                                 'text-gray-600'
                               }`}>
-                                {String.fromCharCode(65 + optIndex)}. {option}
+                                {String.fromCharCode(65 + optIndex)}. {option?.text}
                                 {optIndex === question.correctAnswer && ' ✓'}
                                 {wasAttempted && optIndex === userAnswer && optIndex !== question.correctAnswer && ' ✗ (Your answer)'}
                               </div>

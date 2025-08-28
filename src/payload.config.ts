@@ -6,9 +6,13 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
+import quizRoute from "./routes/quiz"
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import Exams from './collections/Exam'
+import Questions from './collections/Questions'
+import Results from './collections/Results'
+import QuizCategories from './collections/Quizcategory'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +24,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media,Exams,Questions,Results,QuizCategories],
+  serverURL:'http://localhost:3000',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
