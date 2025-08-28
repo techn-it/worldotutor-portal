@@ -2,16 +2,17 @@
 import { BarChart3, User } from "lucide-react";
 import { MCQExam } from "../exam/ExamMcq";
 import { mockUsers } from "@/data/Mcquse";
-
+import { UsesAuth } from "@/context/UsesAuth";
 export const DashboardContent = ({ activeTab }) => {
+  const {user} = UsesAuth();
     const stats = [
       { label: 'Total Users', value: '12,345', change: '+12%', positive: true },
       { label: 'Revenue', value: '$45,678', change: '+8%', positive: true },
       { label: 'Orders', value: '987', change: '-3%', positive: false },
       { label: 'Growth', value: '23%', change: '+15%', positive: true }
     ];
-  
-    if (activeTab === 'dashboard') {
+
+    if (activeTab === 'dashboard' && user?.loginresult?.user?.role === 'admin') {
       return (
         <div className="p-6 space-y-6">
           <div>
@@ -59,7 +60,7 @@ export const DashboardContent = ({ activeTab }) => {
         return <MCQExam />;
       }
     
-      if (activeTab === 'analytics') {
+      if (activeTab === 'analytics' && user?.loginresult?.user?.role === 'admin') {
         return (
           <div className="p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Analytics</h2>
@@ -73,8 +74,8 @@ export const DashboardContent = ({ activeTab }) => {
           </div>
         );
       }
-    
-      if (activeTab === 'users') {
+
+      if (activeTab === 'users' && user?.loginresult?.user?.role === 'admin') {
         return (
           <div className="p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">User Management</h2>
@@ -123,8 +124,8 @@ export const DashboardContent = ({ activeTab }) => {
           </div>
         );
       }
-    
-      if (activeTab === 'settings') {
+
+      if (activeTab === 'settings' && user?.loginresult?.user?.role === 'admin') {
         return (
           <div className="p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Settings</h2>
