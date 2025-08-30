@@ -25,7 +25,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media,Exams,Questions,Results,QuizCategories],
-  serverURL:'http://localhost:3000',
+  serverURL:'https://worldotutor-portal.vercel.app',
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
