@@ -28,7 +28,7 @@ export const MCQExam = () => {
     }, [examState, timeLeft]);
   
     const startExam = () => {
-      const shuffledQuestions = [...mcqQuestions].sort(() => Math.random() - 0.5).slice(0, 8);
+      const shuffledQuestions = [...mcqQuestions].sort(() => Math.random() - 0.5).slice(0, 20);
        setExamQuestions(shuffledQuestions);
       setExamState('taking');
       setCurrentQuestion(0);
