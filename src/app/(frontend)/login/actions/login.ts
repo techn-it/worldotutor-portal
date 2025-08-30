@@ -34,6 +34,10 @@ export async function loginCredential ({email,password}:LoginParams):Promise<Log
                 secure:process.env.NODE_ENV === "production",
                 path:"/"
              })
+
+               if(!loginresult.token){
+                  return {success:false, error:"Invalid email or password"}
+             }
              return {success:true, loginresult}
         }else{
            return {success:false, error:"Invalid email or password"}

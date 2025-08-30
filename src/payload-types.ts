@@ -194,7 +194,7 @@ export interface Question {
   question: string;
   options?:
     | {
-        text?: string | null;
+        text: string;
         id?: string | null;
       }[]
     | null;

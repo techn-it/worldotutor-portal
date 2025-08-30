@@ -164,7 +164,6 @@ export const MCQExam = () => {
               </div>
   
               <div className="space-y-3">
-                {console.log("options", question?.options)}
                 {question?.options.map((option, index) => (
                   <button
                     key={index}
@@ -273,13 +272,13 @@ export const MCQExam = () => {
                   </div>
                 </div>
   
-                <button
+                {/* <button
                   onClick={resetExam}
                   className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors mr-4"
                 >
                   <RotateCcw className="w-4 h-4 inline mr-2" />
                   Take Again
-                </button>
+                </button> */}
               </div>
             </div>
   
@@ -290,7 +289,7 @@ export const MCQExam = () => {
               <div className="p-6 space-y-6">
                 {examQuestions.map((question, index) => {
                   const userAnswer = selectedAnswers[question.id];
-                  const isCorrect = userAnswer+1 === question.correctAnswer;
+                  const isCorrect = userAnswer === question.correctAnswer;
                   const wasAttempted = userAnswer !== undefined;
   
                   return (
